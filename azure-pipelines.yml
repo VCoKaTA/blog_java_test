@@ -32,8 +32,13 @@ steps:
     script: 'ls -al'
 - task: Docker@2
   inputs:
-    command: 'build'
+    containerRegistry: 'pipeline'
+    repository: 'pipeline'
+    command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
+    tags: 'blog$(Build.BuildId)'
+    addPipelineData: false
+    addBaseImageData: false
 - task: Bash@3
   inputs:
     targetType: 'inline'
