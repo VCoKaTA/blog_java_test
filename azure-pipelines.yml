@@ -36,3 +36,7 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: 'Dockerfile'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'docker images'
