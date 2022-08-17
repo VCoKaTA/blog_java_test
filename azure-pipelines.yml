@@ -11,19 +11,28 @@ pool:
 
 steps:
 - script: printenv
- 
 
+    
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    
-- script: |
-    echo Starting the build
-    mvn package
-  displayName: 'Build with Maven'
+    goals: 'clean install'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'ls -al'
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: 'Dockerfile'
