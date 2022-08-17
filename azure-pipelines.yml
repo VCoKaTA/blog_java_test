@@ -30,13 +30,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'ls -al'
+
 - task: Docker@2
   inputs:
     containerRegistry: 'pipeline'
-    repository: 'pipeline'
+    repository: 'kakaximeng'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
-    tags: 'blog$(Build.BuildId)'
     addPipelineData: false
     addBaseImageData: false
 - task: Bash@3
